@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://www.qqxiuzi.cn/zh/suijishu.htm -->
+<html style="overflow: auto;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+<title>随机数抽取器,在线抽号工具 - Happa</title>
+<link href="./file/style.css" rel="stylesheet">
+<style>
+#out {
+	font: 100px Arial, Helvetica, sans-serif;
+	text-align: center;
+	background: #fff;
+}
+#num {
+	width: 100px;
+	border: 1px solid #ccc;
+	padding: 4px;
+	box-sizing: border-box;
+}
+.tips {
+	width: 300px;
+	border: 1px solid #ccc;
+	padding: 4px;
+	box-sizing: border-box;
+}
+#num:hover, .tips:hover {
+	border-color: #999;
+}
+#num:focus, .tips:focus {
+	border-color: #59f;
+}
+#t {
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
+	display: none;
+	font-size: 24px;
+	text-align: right;
+}
+.phone {
+	display: none;
+}
+.main label {
+	display: inline-block;
+	width: 2.5em;
+	line-height: 1.4em;
+	text-align: center;
+	border: 1px solid #ccc;
+	border-radius: 0.1em;
+	box-sizing: border-box;
+	background: #eee;
+	box-shadow: 1px 1px 1px #eee;
+	margin-bottom: 3px;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+.main .phone input[type=checkbox] {
+	display: none;
+}
+.main .phone input[type=checkbox]:checked + label {
+	background: #afa;
+	border-color: #5e5;
+	box-shadow: 1px 1px 1px #0f0;
+}
+.settings {
+	max-width:540px;
+	padding: 5px;
+	background:linear-gradient(90deg,#ffd,#fff);
+}
+.settings input[type=checkbox] {
+	height: 0;
+	width: 0;
+	visibility: hidden;
+	margin: 0;
+	padding: 0;
+}
+.settings label {
+	width: 50px;
+	height: 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	background: #fff;
+	cursor: pointer;
+	transition: border-color .2s, background-color .2s;
+	vertical-align: middle;
+	position: relative;
+}
+.settings label:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: transform 0.2s;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	box-shadow: 0 0 3px rgba(0,0,0,.5);
+	background: #fff;
+}
+.settings input:checked + label {
+	border-color: #05f;
+	background: #07f;
+}
+.settings input:checked + label:before {
+	transform: translateX(30px);
+}
+.settings .box {
+	background-image: linear-gradient(90deg,#feb,#ffe,#fff);
+	margin: 5px 0 5px -5px;
+	padding: 5px;
+}
+.settings .box select {
+	margin-top: 3px;
+}
+</style>
+<script src="./随机数抽取器,在线抽号工具 - 千千秀字_files/f.txt"></script><script src="./随机数抽取器,在线抽号工具 - 千千秀字_files/f(1).txt" id="google_shimpl"></script><script src="./随机数抽取器,在线抽号工具 - 千千秀字_files/hm.js.下载"></script><script>
+var c=0,t,add=[],sec,f=0;
+function timedCount(numarr){
+	var node=document.getElementById('out'), rn=Math.floor(Math.random()*(numarr.length));
+	node.style.color=document.getElementById('tc').value;
+	node.innerHTML=numarr[rn];
+	c=c+1;
+	if(new Date().getTime()-sec > document.getElementById('settime').value){
+		stopCount();
+		c=0;
+		node.style.color=document.getElementById('tsc').value;
+		add.push(numarr[rn]);
+	}else
+	t=setTimeout("timedCount(numarr)",50)
+}
+function stopCount(){
+	clearTimeout(t)
+}
+function getNum(){
+	if(c) return;
+	var nr=document.getElementById('num').value, out=document.getElementById('out');
+	if(sessionStorage.getItem('randomIn')!=nr){
+		sessionStorage.setItem('randomIn',nr);
+		add=[];
+	}
+	if(!/^\d{1,6}-\d{1,6}$/.test(nr)) return alert('输入有误，格式如：1-100，范围0至999999之间的整数。');
+	arr=nr.split("-");
+	a=0,b=0;
+	var in0=Number(arr[0]),in1=Number(arr[1]);
+	if(in0>in1){
+		a=in0;
+		b=in1;
+	}else if(in1>in0){
+		a=in1;
+		b=in0;
+	}else{
+		out.innerHTML=in0;
+		return
+	}
+	numarr=[];
+	var i=b;
+	while(i<=a){
+		if(!document.getElementById('repeat').checked || add.indexOf(i)==-1)
+		numarr.push(i);
+		i++;
+	}
+	if(numarr.length==0){
+		alert('全部抽取完毕，共计'+add.length+'次。');
+		add=[];
+		window.removeEventListener("devicemotion", motionEventHandler, false);
+		x=y=z=lastX=lastY=lastZ=0;
+		out.style.color='black';
+		out.innerHTML='0';
+		return;
+	}
+	sec = new Date().getTime();
+	timedCount(numarr)
+}
+document.onkeydown = function(e){
+    var keyCode = window.event ? e.keyCode : e.which;
+	if((13==keyCode || 32==keyCode) && f==0){
+		getNum();
+		document.getElementById('num').blur();
+		return false;
+	}
+}
+window.onresize = function() {
+	var isFull=!!(document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement || document.fullscreenElement);
+	var the=document.getElementById('out').style;
+	var T=document.getElementById('t').style;
+	if (isFull==false) {
+		the.position='';
+		the.width='';
+		the.height='';
+		the.fontSize='100px';
+		the.lineHeight='';
+		T.display='none';
+		document.body.parentNode.style.overflow='auto';
+		window.removeEventListener("devicemotion", motionEventHandler, false);
+	}else{
+		the.position='fixed';
+		the.width='100%';
+		the.height='100%';
+		the.fontSize='28vw';
+		the.lineHeight='100vh';
+		the.top=0;
+		the.left=0;
+		the.zIndex=9;
+		T.color=document.getElementById('ttc').value;
+		T.display='block';
+		T.zIndex=10;
+		document.body.parentNode.style.overflow='hidden';
+	}
+}
+function fullScreen(e) {
+	e.blur();
+    var element = document.documentElement;
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    }
+	document.getElementById('t').innerHTML=(document.getElementById('tips').value+document.getElementById('tips_phone').value).replace(/</g,'&lt;').replace(/\\n/g,'<br>');
+}
+var speed=30, last_update=0, x=y=z=lastX=lastY=lastZ=0, zd=sy=0;
+function motionEventHandler(e){
+	var acceleration = e.accelerationIncludingGravity;
+	x = acceleration.x;
+	y = acceleration.y;
+	z = acceleration.z;
+	if (Math.abs(x-lastX)>speed || Math.abs(y-lastY)>speed || Math.abs(z-lastZ)>speed) {
+		var curTime = new Date().getTime();
+		if(!c && curTime-last_update>500){
+			last_update = curTime;
+			if(sy)document.getElementById("audio").play();
+			if(zd)window.navigator.vibrate(200);
+			getNum();
+		}
+	}
+	lastX = x;
+	lastY = y;
+	lastZ = z;
+}
+var tm = false;
+function settime(vs,vx){
+	if(tm) return;
+	setTimeout(function(){
+		vx += 50;
+		if(vx>vs) vx=vs;
+		document.getElementById('time').innerHTML=(vx*0.001).toFixed(2);
+		if(vx<vs) settime(vs,vx)
+	}, 50);
+}
+function storage(n){
+	if(n){
+		var st=localStorage.getItem('settime'), bc=localStorage.getItem('bc'), tc=localStorage.getItem('tc'), tsc=localStorage.getItem('tsc'), ttc=localStorage.getItem('ttc'), repeat=localStorage.getItem('repeat');
+		if(st){document.getElementById('settime').value=st;settime(st,0)}
+		if(bc){document.getElementById('bc').value=bc;document.getElementById('out').style.backgroundColor=bc}
+		if(tc){document.getElementById('tc').value=tc;document.getElementById('out').style.color=tc}
+		if(tsc) document.getElementById('tsc').value=tsc;
+		if(ttc){document.getElementById('ttc').value=ttc;document.getElementById('t').style.color=ttc}
+		if(repeat) document.getElementById('repeat').checked=(repeat==1?true:false);
+		if(document.getElementById('settime').value!=700||document.getElementById('bc').value!='#ffffff'||document.getElementById('tc').value!='#000000'||document.getElementById('tsc').value!='#ff0000'||document.getElementById('ttc').value!='#000000'||!document.getElementById('repeat').checked)
+		document.getElementById('r').innerHTML='[<a onclick="defaultValue()">恢复默认</a>]';
+		return;
+	}
+	localStorage.setItem('settime', document.getElementById('settime').value);
+	localStorage.setItem('bc', document.getElementById('bc').value);
+	localStorage.setItem('tc', document.getElementById('tc').value);
+	localStorage.setItem('tsc', document.getElementById('tsc').value);
+	localStorage.setItem('ttc', document.getElementById('ttc').value);
+	localStorage.setItem('repeat', document.getElementById('repeat').checked?1:0);
+}
+function defaultValue(){
+	document.getElementById('settime').value=700;
+	tm=true;
+	setTimeout(function(){tm=false;settime(700,0)},100);
+	document.getElementById('bc').value='#ffffff';
+	document.getElementById('out').style.backgroundColor='#ffffff';
+	document.getElementById('tc').value='#000000';
+	document.getElementById('out').style.color='#000000';
+	document.getElementById('tsc').value='#ff0000';
+	document.getElementById('ttc').value='#000000';
+	document.getElementById('t').style.color='#000000';
+	document.getElementById('repeat').checked=true;
+	localStorage.clear();
+	document.getElementById('r').innerHTML=''
+}
+</script>
+<script async="" src="./随机数抽取器,在线抽号工具 - 千千秀字_files/f(2).txt"></script>
+<script src="./随机数抽取器,在线抽号工具 - 千千秀字_files/head.js.下载"></script>
+<meta http-equiv="origin-trial" content="AzoawhTRDevLR66Y6MROu167EDncFPBvcKOaQispTo9ouEt5LvcBjnRFqiAByRT+2cDHG1Yj4dXwpLeIhc98/gIAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A6+nc62kbJgC46ypOwRsNW6RkDn2x7tgRh0wp7jb3DtFF7oEhu1hhm4rdZHZ6zXvnKZLlYcBlQUImC4d3kKihAcAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A/9La288e7MDEU2ifusFnMg1C2Ij6uoa/Z/ylwJIXSsWfK37oESIPbxbt4IU86OGqDEPnNVruUiMjfKo65H/CQwAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjYxMjk5MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><link rel="preload" href="./随机数抽取器,在线抽号工具 - 千千秀字_files/f(3).txt" as="script"><script type="text/javascript" src="./随机数抽取器,在线抽号工具 - 千千秀字_files/f(3).txt"></script></head>
+<body> 
+<div class="main" style="height: auto !important;">
+  <div class="title"><h1>随机数抽取</h1></div>
+  <div class="ad">
+<ins class="adsbygoogle" style="display: block; height: 280px;" data-ad-client="ca-pub-2440711871479504" data-ad-slot="8604148262" data-ad-format="auto" data-adsbygoogle-status="done" data-ad-status="filled"><ins id="aswift_0_expand" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 280px; width: 980px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_0_anchor" style="border: none; height: 280px; width: 980px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block; overflow: visible;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:980px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="980" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./随机数抽取器,在线抽号工具 - 千千秀字_files/ads.html" data-google-container-id="a!1" data-google-query-id="CIeEgZLijfgCFZh1YAod6uECww" data-load-complete="true"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div> 
+    <div id="out" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 100px;">0</div>
+    <div id="t" style="display: none;"></div>
+    <p align="center"><input type="text" id="num" value="1-41" placeholder="数字范围">
+    <input onclick="getNum()" type="button" value="抽取"></p>
+      <p>在输入框中填写数字范围，然后点击抽取即可（按回车键或空格键亦可）。</p>
+      <div id="screen">
+      <audio id="audio" src="/audio/1.ogg"></audio>
+      <p class="pc"><input onclick="fullScreen(this)" type="button" value="全屏">
+      <input type="text" id="tips" class="tips" placeholder="输入提示文字，可用\n换行。" maxlength="60" onfocus="javascript:f=1" onblur="javascript:f=0">
+      <br>点击全屏按钮进入全屏模式，使用回车键抽取数字。</p>
+      <div class="phone"><input onclick="if(sy)document.getElementById(&#39;audio&#39;).play();if(zd)window.navigator.vibrate(200);window.addEventListener(&#39;devicemotion&#39;, motionEventHandler, false);fullScreen(this)" type="button" value="全屏">
+      <input type="text" id="tips_phone" class="tips" style="width:280px;margin-bottom:3px" placeholder="输入提示文字，可用\n换行。" maxlength="60" onfocus="javascript:f=1" onblur="javascript:f=0">
+      <br>全屏后摇动手机抽取<span style="display:inline-block">(<input id="zd" type="checkbox" value="1" onclick="if(this.checked)zd=1;else zd=0;"><label for="zd">震动</label>
+      <input id="sy" type="checkbox" value="1" onclick="if(this.checked)sy=1;else sy=0;"><label for="sy">声音</label>)</span></div>
+      </div>
+      <div class="settings">设置：<span id="r">[<a onclick="defaultValue()">恢复默认</a>]</span><br>
+      时延<input type="range" max="5000" min="250" value="700" onchange="tm=false;settime(this.value,0);storage(0)" oninput="tm=true;document.getElementById(&#39;time&#39;).innerHTML=(this.value*0.001).toFixed(2)" id="settime"><span id="time">2.00</span>秒<br>
+      背　景　颜　色　<input type="color" value="#ffffff" id="bc" onchange="document.getElementById(&#39;out&#39;).style.backgroundColor=this.value;storage(0)"><br>
+      数字颜色（滚动）<input type="color" value="#000000" id="tc" onchange="document.getElementById(&#39;out&#39;).style.color=this.value;storage(0)"><br>
+      数字颜色（抽中）<input type="color" value="#ff0000" id="tsc" onchange="document.getElementById(&#39;out&#39;).style.color=this.value;storage(0)"><br>
+      <div class="box">文字颜色（提示）<input type="color" value="#000000" id="ttc" onchange="document.getElementById(&#39;t&#39;).style.color=this.value;storage(0)"><br>
+      方位 <select id="position" onchange="document.getElementById(&#39;t&#39;).style.cssText=&#39;position:fixed;display:none;width:100vw;&#39;+this.value+&#39;;font-size:&#39;+document.getElementById(&#39;fontsize&#39;).value+&#39;px&#39;;">
+        <option value="top:5px;right:0;text-align:center;">上中</option>
+        <option value="bottom:5px;right:0;text-align:center;">下中</option>
+        <option value="top:5px;left:5px;text-align:left;">左上</option>
+        <option value="top:5px;right:5px;text-align:right;">右上</option>
+        <option value="bottom:5px;right:5px;text-align:right;" selected="">右下</option>
+        <option value="bottom:5px;left:5px;text-align:left;">左下</option>
+      </select>&nbsp;
+      字号 <select id="fontsize" onchange="document.getElementById(&#39;t&#39;).style.fontSize=this.value+&#39;px&#39;;">
+        <option value="20">20</option>
+        <option value="22">22</option>
+        <option value="24" selected="">24</option>
+        <option value="26">26</option>
+        <option value="28">28</option>
+        <option value="30">30</option>
+        <option value="32">32</option>
+      </select>
+      </div>
+      周期内不重复　　<input id="repeat" type="checkbox" value="1" checked="" onchange="if(this.checked)add=[];storage(0)"><label for="repeat"></label>
+      </div>
+      <p>随机抽号基于内置的随机数发生器，在预设数字范围内，采用平均分布的抽取方式产生一个随机数。人的主观意念认为数字范围的最小端和最大端抽取到的概率更低，实际上它们和中间段数字出现的概率相同。</p>
+      <p>该页面作为一个通用的抽号在线工具，供需要的用户使用。抽号工具默认开启了去重处理，即在一个周期内不会抽取到重复的数字。例如抽取1-9，在第10次抽取前不会出现重复数字。关闭“周期内不重复”选项，可取消此限制。</p>
+      <p>相关页面：<a href="https://www.happa.cf">Happa</a></p>
+</div>
+<div class="foot">QQXIUZI.CN　<a href="https://www.happa.cf">Happa</a><span id="feedback" style="margin-left:1em;cursor:pointer" onclick="feedbackPanel()">用户反馈</span></div>
+<script>
+if(/Android/i.test(navigator.userAgent) && window.DeviceMotionEvent){
+	document.getElementsByClassName('phone').item(0).style.display='block';
+	document.getElementsByClassName('pc').item(0).style.display='none';
+}
+else if(/(Android|iOS|iPhone|iPad)/i.test(navigator.userAgent)) document.getElementById('screen').style.display='none';
+storage(1);
+</script>
+
+
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><ins id="aswift_1_expand" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: none;"><ins id="aswift_1_anchor" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: none;"><iframe id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./随机数抽取器,在线抽号工具 - 千千秀字_files/ads(1).html" data-google-container-id="a!2" data-load-complete="true"></iframe></ins></ins></ins></body><iframe id="google_esf" name="google_esf" src="./随机数抽取器,在线抽号工具 - 千千秀字_files/zrt_lookup.html" style="display: none;"></iframe></html>
