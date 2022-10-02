@@ -4,6 +4,18 @@
     "sourceURL": "https://alist.happa.cf/d/appstore.json",
     "sourceicon": "https://avatars.githubusercontent.com/u/103435413?v=4",
     "apps": [
+                {
+            "name": "HappaCer",
+            "version": "0.0",
+            "versionDate": "2023-06-12",
+            "versionDescription": "Distribution\n\n密码123456\n带健康权限、文字、CallKit免后台推送（只有管替包能享受，CallKit不一定能成功，大部分用户能使用）",
+            "lock": "0",
+            "downloadURL": "https://alist.happa.top/d/HappaCer/Distribution/cert.zip",
+            "isLanZouCloud": "0",
+            "iconURL": "https://avatars.githubusercontent.com/u/103435413?v=4",
+            "tintColor": "",
+            "size": "16.70"
+        },
         {
             "name": "微信官替",
             "version": "8.0.29",
