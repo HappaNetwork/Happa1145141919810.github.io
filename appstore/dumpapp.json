@@ -16,6 +16,18 @@
             "tintColor": "",
             "size": "16.70"
         },
+                {
+            "name": "抖音",
+            "version": "22.5",
+            "versionDate": "2022-10-01",
+            "versionDescription": "已注入\n抖音净化\nAweme Helper\nHappa Helper0.1-1\n#本HH功能介绍-屏蔽青少年提示",
+            "lock": "0",
+            "downloadURL": "https://alist.happa.top/d/%E6%8A%96%E9%9F%B322.5/%E6%8A%96%E9%9F%B3_22.5.0_com.ss.iphone.ugc.Aweme.Happa.ipa",
+            "isLanZouCloud": "0",
+            "iconURL": "https://happa.cf/appstore/icon/%E6%8A%96%E9%9F%B3.jpg",
+            "tintColor": "",
+            "size": "268435456"
+        },
         {
             "name": "微信官替",
             "version": "8.0.29",
