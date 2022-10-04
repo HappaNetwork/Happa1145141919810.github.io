@@ -5,6 +5,18 @@
     "sourceicon": "https://avatars.githubusercontent.com/u/103435413?v=4",
     "apps": [
                 {
+            "name": "Fileball",
+            "version": "1.2.1",
+            "versionDate": "2022-09-01",
+            "versionDescription": "感谢彭于晏提供的\nfileball+解锁订阅规则\nhttps://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/fileball.js",
+            "lock": "0",
+            "downloadURL": "https://alist.happa.top/d/Fileball_1.2.1/Fileball_1.2.1.ipa",
+            "isLanZouCloud": "0",
+            "iconURL": "https://happa.cf/appstore/icon/FileBall.jpg",
+            "tintColor": "",
+            "size": "45822771.2"
+        },
+                {
             "name": "抖音",
             "version": "22.5",
             "versionDate": "2022-10-01",
